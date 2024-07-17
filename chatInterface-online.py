@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from openai import OpenAI, OpenAIError
 import os
-from dotenv import load_dotenv
 import logging 
 
 app = Flask(__name__)
