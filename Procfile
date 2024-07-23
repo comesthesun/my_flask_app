@@ -1,1 +1,1 @@
-web: python3 chatInterface-online.py
+web: python3 chat-render-env-menu.py
