@@ -1,19 +1,18 @@
-
 from flask import Flask, request, jsonify, render_template
-import openai
+from openai import OpenAI, OpenAIError
 import os
-import logging
+import logging 
 
-# Initialize the Flask app
 app = Flask(__name__)
 
 # Retrieve the OpenAI API key from environment variables
 api_key = os.getenv('OPENAI_API_KEY')
+
 if not api_key:
     raise ValueError("No OPENAI_API_KEY provided in environment variables")
 
 # Initialize the OpenAI client
-openai.api_key = api_key
+client = OpenAI(api_key=api_key)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -39,7 +38,7 @@ def chat():
     conversation.append({'role': 'user', 'content': user_input})
 
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model=model,
             messages=conversation,
             max_tokens=max_tokens,
@@ -53,14 +52,13 @@ def chat():
         logging.info('Response: %s', result)
         return jsonify(result)
 
-    except openai.error.OpenAIError as e:
+    except OpenAIError as e:
         logging.error('OpenAIError: %s', e)
         return jsonify({'error': str(e)}), 501
+
     except Exception as e:
         logging.error('Unexpected error: %s', e)
         return jsonify({'error': 'An unexpected error occurred'}), 502
 
-# Ensure Flask app runs only when executed directly
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 8000)))
-    
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8000)))
