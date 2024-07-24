@@ -32,7 +32,7 @@ def chat():
         return jsonify({'error': 'No message provided'}), 400
 
 
-    model = data.get('model', 'gpt-4')
+    model = data.get('model', 'gpt-4o-mini')
     max_tokens = data.get('max_tokens', 150)
     temperature = data.get('temperature', 0.7)
     conversation = data.get('conversation', [])
