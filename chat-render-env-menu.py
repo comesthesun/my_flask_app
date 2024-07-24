@@ -46,7 +46,7 @@ def chat():
             temperature=temperature
         )
         # Get the assistant's response
-        assistant_response = response.choices[0].message['content']
+    assistant_response = response.choices[0].message['content']
         conversation.append({'role': 'assistant', 'content': assistant_response})
 
         result = {'response': assistant_response, 'conversation': conversation}
