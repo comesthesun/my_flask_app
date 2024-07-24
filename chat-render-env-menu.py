@@ -40,7 +40,7 @@ def chat():
     conversation.append({'role': 'user', 'content': user_input})
 
     try:
-    response = client.chat.completions.create(
+        response = client.chat.completions.create(
             model=model,
             messages=conversation,
             max_tokens=max_tokens,
