@@ -31,6 +31,7 @@ def chat():
     if not user_input:
         return jsonify({'error': 'No message provided'}), 400
 
+
     model = data.get('model', 'gpt-4')
     max_tokens = data.get('max_tokens', 150)
     temperature = data.get('temperature', 0.7)
@@ -51,7 +52,8 @@ def chat():
         )
         
         # Get the assistant's response
-        assistant_response = response.choices[0].message['content']
+        # assistant_response = response.choices[0].message['content']
+        assistant_response = response.choices[0].message.content
         conversation.append({'role': 'assistant', 'content': assistant_response})
 
         result = {'response': assistant_response, 'conversation': conversation}
