@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat with OpenAI</title>
+  <link rel="stylesheet" type="text/css" href="static/chat-local-0729v2-copy.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+      <form id="chat-form">
+          <table>
+              <!-- Row 1: Heading -->
+              <thead>
+                  <tr>
+                      <th colspan="3">
+                          <h1>Chat with OpenAI</h1>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <!-- Row 2: Enter Your Prompt -->
+                  <tr>
+                      <td class="right-align">PROMPT</td>
+                      <td class="left-align" colspan="2">
+                          <textarea id="prompt" name="prompt" placeholder="Type your message..." required wrap="hard"></textarea>
+                      </td>
+                  </tr>
+                  <!-- Row 3: Model -->
+                  <tr>
+                      <td class="right-align">MODEL</td>
+                      <td class="left-align column2">
+                          <select id="model" name="model">
+                              <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+                              <option value="gpt-4">gpt-4</option>
+                              <option value="gpt-4o-mini" selected>gpt-4o-mini</option>
+                              <option value="gpt-4o">gpt-4o</option>
+                          </select>
+                      </td>
+                      <td class="left-align column3">
+                          <!-- Optional content or empty cell -->
+                      </td>
+                  </tr>
+                  <!-- Row 4: Max Tokens -->
+                  <tr>
+                      <td class="right-align">MAX TOKENS</td>
+                      <td class="left-align column2">
+                          <input type="number" id="max_tokens" name="max_tokens" value="150">
+                      </td>
+                      <td class="left-align column3">
+                          <!-- Optional content or empty cell -->
+                      </td>
+                  </tr>
+                  <!-- Row 5: Temperature -->
+                  <tr>
+                      <td class="right-align">TEMPERATURE</td>
+                      <td class="left-align column2">
+                          <input type="number" step="0.1" min="0" max="1" id="temperature" name="temperature" value="0.7">
+                      </td>
+                      <td class="left-align column3">
+                          <!-- Optional content or empty cell -->
+                      </td>
+                  </tr>
+                  <!-- Row 6: Send Button -->
+                  <tr>
+                      <td></td>
+                      <td class="left-align" colspan="2">
+                          <button type="submit">Send</button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </form>
+      <div id="chat-history"></div>
+
+      <script>
+          const form = document.getElementById('chat-form');
+          const promptInput = document.getElementById('prompt');
+          const modelSelect = document.getElementById('model');
+          const maxTokensInput = document.getElementById('max_tokens');
+          const temperatureInput = document.getElementById('temperature');
+          const chatHistory = document.getElementById('chat-history');
+          let conversation = [];
+
+          form.addEventListener('submit', async function(event) {
+              event.preventDefault();
+              const prompt = promptInput.value.trim();
+              const model = modelSelect.value;
+              const max_tokens = parseInt(maxTokensInput.value);
+              const temperature = parseFloat(temperatureInput.value);
+
+              chatHistory.innerHTML += `<p><strong>You:</strong> ${prompt}</p>`;
+              promptInput.value = '';
+
+              try {
+                  const response = await fetch('/chat', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                          message: prompt,
+                          model: model,
+                          max_tokens: max_tokens,
+                          temperature: temperature,
+                          conversation: conversation
+                      })
+                  });
+
+                  if (!response.ok) {
+                      throw new Error(`HTTP error! Status: ${response.status}`);
+                  }
+
+                  const result = await response.json();
+                  conversation = result.conversation;
+
+                  chatHistory.innerHTML += `<p><strong>Assistant:</strong> ${result.response}</p>`;
+                  chatHistory.scrollTop = chatHistory.scrollHeight;
+              } catch (error) {
+                  console.error('Fetch error:', error);
+                  chatHistory.innerHTML += `<p style="color: red;">An error occurred: ${error.message}</p>`;
+              }
+          });
+      </script>
+  </div>
+</body>
+</html>
+</div>
+
+
+  <!-- JavaScript for auto-adjusting textarea height -->
+  <script>
+    const textarea = document.getElementById('prompt');
+
+    textarea.addEventListener('input', function () {
+      this.style.height = 'auto'; // Reset height
+      this.style.height = `${this.scrollHeight}px`; // Set to scrollHeight
+    });
+  </script>
+</body>
+</html>
