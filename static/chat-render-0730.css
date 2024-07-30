@@ -1,0 +1,85 @@
+body {
+    font-family: 'Roboto Mono', monospace;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Ensures columns follow specified widths */
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    vertical-align: middle; /* Aligns text to the top */
+}
+
+th {
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+/* Column widths */
+td.right-align, th.right-align {
+    text-align: right;
+    font-weight: 300;
+    width: 100px;
+}
+
+td.left-align, th.left-align {
+    text-align: left;
+}
+
+td.column2, th.column2 {
+    width: 100px;
+    font-size: 14px;
+}
+
+td.column3, th.column3 {
+    width: 600px;
+}
+
+textarea, select, input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#chat-history {
+    font-family: 'Roboto Mono', monospace;
+    white-space: pre-wrap;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 40px;
+    max-width: 100%;
+    overflow-y: auto;
+}
