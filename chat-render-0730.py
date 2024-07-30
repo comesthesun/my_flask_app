@@ -7,15 +7,11 @@ import logging
 # Initialize the Flask app
 app = Flask(__name__)
 
-# Clear the environment variable
-if 'OPENAI_API_KEY' in os.environ:
-    del os.environ['OPENAI_API_KEY']
-
-# Load environment variables
-load_dotenv()
-
 # Retrieve the OpenAI API key from environment variables
 api_key = os.getenv('OPENAI_API_KEY')
+
+if not api_key:
+    raise ValueError("No OPENAI_API_KEY provided in environment variables")
 
 # Initialize the OpenAI client
 client = OpenAI(api_key=api_key)
