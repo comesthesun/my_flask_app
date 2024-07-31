@@ -92,7 +92,6 @@
 
               chatHistory.innerHTML += `<p><strong>You:</strong> ${prompt}</p>`;
               promptInput.value = '';
-              promptInput.style.height = 'auto'; // Reset textarea height to default
 
               try {
                   const response = await fetch('/chat', {
@@ -128,7 +127,6 @@
 </body>
 </html>
 </div>
-
 
   <!-- JavaScript for auto-adjusting textarea height -->
   <script>
