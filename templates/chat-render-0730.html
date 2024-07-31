@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat with OpenAI</title>
-  <link rel="stylesheet" type="text/css" href="static/chat-render-0730.css">
+  <link rel="stylesheet" type="text/css" href="static/chat-local-0730.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -15,7 +15,7 @@
               <thead>
                   <tr>
                       <th colspan="3">
-                          <h1>chat with chimpanda</h1>
+                          <h1>Chat with OpenAI</h1>
                       </th>
                   </tr>
               </thead>
@@ -92,6 +92,7 @@
 
               chatHistory.innerHTML += `<p><strong>You:</strong> ${prompt}</p>`;
               promptInput.value = '';
+              promptInput.style.height = 'auto'; // Reset textarea height to default
 
               try {
                   const response = await fetch('/chat', {
