@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chat with OpenAI</title>
-  <link rel="stylesheet" type="text/css" href="static/chat-render-0730.css">
+  <link rel="stylesheet" type="text/css" href="static/chat-local-0730.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -92,6 +92,7 @@
 
               chatHistory.innerHTML += `<p><strong>You:</strong> ${prompt}</p>`;
               promptInput.value = '';
+              promptInput.style.height = '100px'; // Reset textarea height to 100 pixels
 
               try {
                   const response = await fetch('/chat', {
@@ -122,21 +123,15 @@
                   chatHistory.innerHTML += `<p style="color: red;">An error occurred: ${error.message}</p>`;
               }
           });
+
+          const textarea = document.getElementById('prompt');
+
+          textarea.addEventListener('input', function () {
+              this.style.height = 'auto'; // Reset height
+              this.style.height = `${this.scrollHeight}px`; // Set to scrollHeight
+          });
       </script>
   </div>
 </body>
 </html>
 </div>
-
-
-  <!-- JavaScript for auto-adjusting textarea height -->
-  <script>
-    const textarea = document.getElementById('prompt');
-
-    textarea.addEventListener('input', function () {
-      this.style.height = 'auto'; // Reset height
-      this.style.height = `${this.scrollHeight}px`; // Set to scrollHeight
-    });
-  </script>
-</body>
-</html>
